@@ -10,7 +10,7 @@ namespace SklepRTV.Model
 	{
 		public Guid Id { get; private set; } = Guid.NewGuid();
 		public Product[] products { get; set; }
-		public double total { get; set; }
+		public decimal total { get; set; }
 		public Guid customerId { get; private set; }
 	}
 }

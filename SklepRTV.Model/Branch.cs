@@ -9,12 +9,12 @@ namespace SklepRTV.Model
 	public class Branch
 	{
 		public Guid Id { get; private set; } = Guid.NewGuid();
-		string city { get; set; } = default!;
-		string street { get; set; } = default!;
-		int houseNo { get; set; }
-		int flatNo { get; set; }
-		int countryId { get; set; }
-		string province { get; set; } = default!;
+		public string city { get; set; } = default!;
+		public string street { get; set; } = default!;
+		public int houseNo { get; set; }
+		public int flatNo { get; set; }
+		public int countryId { get; set; }
+		public string province { get; set; } = default!;
 	}
 }
 

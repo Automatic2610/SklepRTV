@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SklepRTV.MVC", "SklepRTV.MVC\SklepRTV.MVC.csproj", "{E4BCEE87-AF37-4661-B8E7-AC2F620D0AD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SklepRTV.MVC", "SklepRTV.MVC\SklepRTV.MVC.csproj", "{E4BCEE87-AF37-4661-B8E7-AC2F620D0AD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SklepRTV.Model", "SklepRTV.Model\SklepRTV.Model.csproj", "{68EF65D2-7DE9-4D09-B958-06BF64D2DE89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SklepRTV.Model", "SklepRTV.Model\SklepRTV.Model.csproj", "{68EF65D2-7DE9-4D09-B958-06BF64D2DE89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SklepRTV.Database", "SklepRTV.Database\SklepRTV.Database.csproj", "{432046A5-0D20-426F-89E9-C16DB77C6F23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{68EF65D2-7DE9-4D09-B958-06BF64D2DE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68EF65D2-7DE9-4D09-B958-06BF64D2DE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68EF65D2-7DE9-4D09-B958-06BF64D2DE89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{432046A5-0D20-426F-89E9-C16DB77C6F23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{432046A5-0D20-426F-89E9-C16DB77C6F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{432046A5-0D20-426F-89E9-C16DB77C6F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{432046A5-0D20-426F-89E9-C16DB77C6F23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

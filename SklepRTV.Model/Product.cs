@@ -10,11 +10,12 @@ namespace SklepRTV.Model
     {
         public Guid Id { get; private set; } = Guid.NewGuid();
         public string name { get; set; } = default!;
-        public double price { get; set; }
+        public decimal price { get; set; }
         public int unitId { get; set; }
         public int quantity { get; set; }
         public string description { get; set; } = default!;
         public int stock { get; set; }
-        public Warehouse[] warehouses { get; set; }
+        public virtual Warehouse[] warehouses { get; set; } = { };
+        public virtual Category[] Categories { get; set; } = { };
     }
 }

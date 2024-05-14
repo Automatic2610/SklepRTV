@@ -1,16 +1,18 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SklepRTV.Model
 {
-	internal class Customer
+	public class Customer
 	{
 		public Guid id { get; private set; } = Guid.NewGuid();
 		public Guid userId { get; private set; }
-		public virtual ContactDetails contactDetails { get; set; }
-		public virtual AddressDetails addressDetails { get; set; }
+		public ContactDetails contactDetails { get; set; } = default!;
+		public AddressDetails addressDetails { get; set; } = default!;
 	}
 }

@@ -11,7 +11,7 @@ namespace SklepRTV.MVC.Controllers
 			products.Add(new SklepRTV.Model.Product
 			{
 				name = "Mateusz",
-				price = 25.624f,
+				price = 25.624m,
 				unitId = 4,
 				quantity = 43,
 				description = "uga buga",
