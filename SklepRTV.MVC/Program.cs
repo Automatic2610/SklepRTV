@@ -1,15 +1,23 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using SklepRTV.Database;
+using SklepRTV.MVC.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 //Zatwierdzenie
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<DatabaseContext>(options =>
+builder.Services.AddDbContext<IdentityDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SklepRTV"));
 });
+
+builder.Services.AddDefaultIdentity<SklepRTV.MVC.Areas.Identity.Data.User>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<IdentityDbContext>();
+
+
+
 
 var app = builder.Build();
 
@@ -26,10 +34,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.Run();
