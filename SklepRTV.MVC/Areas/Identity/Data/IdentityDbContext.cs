@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SklepRTV.Model;
 using SklepRTV.MVC.Areas.Identity.Data;
 
@@ -25,10 +26,24 @@ public class IdentityDbContext : IdentityDbContext<SklepRTV.MVC.Areas.Identity.D
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Customer>().OwnsOne(a => a.addressDetails);
         modelBuilder.Entity<Worker>().OwnsOne(a => a.addressDetails);
 
         modelBuilder.Entity<Customer>().OwnsOne(c => c.contactDetails);
         modelBuilder.Entity<Worker>().OwnsOne(c => c.contactDetails);
+
+       modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
+    }
+}
+
+public class ApplicationUserConfiguration : IEntityTypeConfiguration<SklepRTV.MVC.Areas.Identity.Data.User>
+{
+    public void Configure(EntityTypeBuilder<Areas.Identity.Data.User> builder)
+    {
+        
+        builder.Property(x => x.FirstName).HasMaxLength(50);
+        builder.Property(x => x.LastName).HasMaxLength(50);
     }
 }
