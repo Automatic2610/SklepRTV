@@ -11,9 +11,9 @@ using SklepRTV.MVC.Data;
 
 namespace SklepRTV.MVC.Migrations
 {
-    [DbContext(typeof(IdentityDbContext))]
-    [Migration("20240609172254_identity")]
-    partial class identity
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20240609181300_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -180,16 +180,6 @@ namespace SklepRTV.MVC.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");

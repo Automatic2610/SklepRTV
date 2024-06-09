@@ -7,9 +7,9 @@ using SklepRTV.MVC.Areas.Identity.Data;
 
 namespace SklepRTV.MVC.Data;
 
-public class IdentityDbContext : IdentityDbContext<SklepRTV.MVC.Areas.Identity.Data.User>
+public class ApplicationDbContext : IdentityDbContext<SklepRTV.MVC.Areas.Identity.Data.User>
 {
-    public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
@@ -42,8 +42,6 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<SklepRTV.MV
 {
     public void Configure(EntityTypeBuilder<Areas.Identity.Data.User> builder)
     {
-        
-        builder.Property(x => x.FirstName).HasMaxLength(50);
-        builder.Property(x => x.LastName).HasMaxLength(50);
+
     }
 }

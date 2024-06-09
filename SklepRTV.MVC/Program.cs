@@ -8,13 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 //Zatwierdzenie
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<IdentityDbContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SklepRTV"));
 });
 
 builder.Services.AddDefaultIdentity<SklepRTV.MVC.Areas.Identity.Data.User>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<IdentityDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
 
