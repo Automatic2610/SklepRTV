@@ -25,6 +25,15 @@ namespace SklepRTV.MVC.Controllers
 			return View(products);
 		}
 
+        [Authorize(Roles = "Admin")]
+		[HttpGet]
+        public IActionResult AdminIndex()
+		{
+            var products = _db.Products.ToList();
+
+            return View(products);
+        }
+
 		public IActionResult Details(Guid id)
 		{
 
@@ -52,6 +61,52 @@ namespace SklepRTV.MVC.Controllers
 			}
 
 			return View(product);
+		}
+		[Authorize(Roles = "Admin")]
+		public IActionResult Edit(Guid id)
+		{
+			var product = _db.Products.FirstOrDefault(x => x.Id == id);
+
+			if(product == null) return NotFound();
+
+			return View(product);
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpPost]
+		public IActionResult Edit(Product product)
+		{
+			if(ModelState.IsValid)
+			{
+				_db.Products.Update(product);
+				_db.SaveChanges();
+
+				return RedirectToAction("AdminIndex");
+			}
+
+			return View(product);
+		}
+
+		[Authorize(Roles = "Admin")]
+		public IActionResult Delete(Guid id)
+		{
+			var product = _db.Products.FirstOrDefault(x => x.Id == id);
+			if(product == null) return NotFound();
+
+			return View(product);
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpPost, ActionName("Delete")]
+		public IActionResult DeletePOST(Guid id)
+		{
+			var product = _db.Products.FirstOrDefault(x => x.Id == id);
+
+			if(product == null) return NotFound();
+			_db.Products.Remove(product);
+			_db.SaveChanges();
+
+			return RedirectToAction("AdminIndex");
 		}
 	}
 }

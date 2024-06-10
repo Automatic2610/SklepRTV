@@ -14,5 +14,5 @@
 
 @if(User.IsInRole("Admin"))
 {
-    
+    Context.Response.Redirect("Admin/Index");
 }
