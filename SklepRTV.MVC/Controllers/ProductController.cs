@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SklepRTV.Model;
 using SklepRTV.MVC.Data;
@@ -33,13 +34,14 @@ namespace SklepRTV.MVC.Controllers
 
 			return View(product);
 		}
-
+		[Authorize(Roles = "Admin")]
 		public IActionResult Create()
 		{
 			return View();
 		}
 
-		[HttpPost]
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
 		public IActionResult Create(Product product)
 		{
 			if(ModelState.IsValid)

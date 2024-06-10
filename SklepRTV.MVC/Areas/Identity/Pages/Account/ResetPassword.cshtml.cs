@@ -11,15 +11,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using SklepRTV.MVC.Areas.Identity.Data;
+
 
 namespace SklepRTV.MVC.Areas.Identity.Pages.Account
 {
     public class ResetPasswordModel : PageModel
     {
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ResetPasswordModel(UserManager<User> userManager)
+        public ResetPasswordModel(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
         }
