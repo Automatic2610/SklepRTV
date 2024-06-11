@@ -144,6 +144,8 @@ namespace SklepRTV.MVC.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
+
+                    IdentityResult memberRole = await _userManager.AddToRoleAsync(user, "Member");
                 }
                 foreach (var error in result.Errors)
                 {

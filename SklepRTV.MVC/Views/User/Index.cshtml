@@ -4,6 +4,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th scope="col">Id</th>
             <th scope="col">Nazwa użytkownika</th>
             <th scope="col">Email</th>
             <th scope="col">Potwierdzony</th>
@@ -13,9 +14,13 @@
         @foreach(var user in Model)
         {
             <tr scope="row">
+                <td>@user.Id</td>
                 <td>@user.UserName</td>
                 <td>@user.Email</td>
                 <td>@user.EmailConfirmed</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="User" asp-action="Details" asp-route-id="@user.Id">Podgląd</a>
+                </td>
             </tr>
         }
     </tbody>

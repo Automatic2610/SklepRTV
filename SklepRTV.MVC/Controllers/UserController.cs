@@ -19,5 +19,14 @@ namespace SklepRTV.MVC.Controllers
             var users = _userManager.Users.ToList();
             return View(users);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+
+            if (user == null) return NotFound();
+            return View(user);
+        }
     }
 }

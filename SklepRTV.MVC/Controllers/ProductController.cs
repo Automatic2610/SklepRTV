@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SklepRTV.Model;
 using SklepRTV.MVC.Data;
@@ -10,10 +11,12 @@ namespace SklepRTV.MVC.Controllers
 	{
 
 		private readonly ApplicationDbContext _db;
+		private readonly IWebHostEnvironment _environment;
 
-        public ProductController(ApplicationDbContext db)
+        public ProductController(ApplicationDbContext db, IWebHostEnvironment environment)
         {
             _db = db;
+			_environment = environment;
         }
 
         public IActionResult Index()
@@ -51,12 +54,26 @@ namespace SklepRTV.MVC.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-		public IActionResult Create(Product product)
+		public IActionResult Create(Product product, IFormFile image)
 		{
 			if(ModelState.IsValid)
 			{
+				if(image != null)
+				{
+					var uploads = Path.Combine(_environment.WebRootPath, "uploads");
+					if(!Directory.Exists(uploads)) Directory.CreateDirectory(uploads);
+
+					var filePath = Path.Combine(uploads, image.FileName);
+					using(var fileStream = new FileStream(filePath, FileMode.Create))
+					{
+						image.CopyTo(fileStream);
+					}
+
+					product.imagePath = $"/uploads/{image.FileName}";
+				}
+
 				_db.Products.Add(product);
-				_db.SaveChanges();
+				 _db.SaveChanges();
 				return RedirectToAction("Index");
 			}
 
@@ -74,12 +91,26 @@ namespace SklepRTV.MVC.Controllers
 
 		[Authorize(Roles = "Admin")]
 		[HttpPost]
-		public IActionResult Edit(Product product)
+		public IActionResult Edit(Product product, IFormFile image)
 		{
 			if(ModelState.IsValid)
 			{
-				_db.Products.Update(product);
-				_db.SaveChanges();
+                if (image != null)
+                {
+                    var uploads = Path.Combine(_environment.WebRootPath, "uploads");
+                    if (!Directory.Exists(uploads)) Directory.CreateDirectory(uploads);
+
+                    var filePath = Path.Combine(uploads, image.FileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        image.CopyToAsync(fileStream);
+                    }
+
+                    product.imagePath = $"/uploads/{image.FileName}";
+                }
+
+                _db.Products.Update(product);
+				 _db.SaveChangesAsync();
 
 				return RedirectToAction("AdminIndex");
 			}

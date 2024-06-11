@@ -17,5 +17,6 @@ namespace SklepRTV.Model
         public int stock { get; set; }
         public virtual Warehouse[] warehouses { get; set; } = { };
         public virtual Category[] Categories { get; set; } = { };
+        public string imagePath { get; set; } = default!;
     }
 }

@@ -1,0 +1,41 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityUser
+
+<h3>Użytkownik: @Model.UserName</h3>
+<table class="table table-bordered border-primary">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Id:</th>
+            <td>@Model.Id</td>
+        </tr>
+        <tr>
+            <th scope="row">Nazwa użytkownika:</th>
+            <td>@Model.UserName</td>
+        </tr>
+        <tr>
+            <th scope="row">Email:</th>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <th scope="row">Potwierdzony:</th>
+            <td>@Model.EmailConfirmed</td>
+        </tr>
+        <tr>
+            <th scope="row">Numer telefonu:</th>
+            <td>@Model.PhoneNumber</td>
+        </tr>
+        <tr>
+            <th scope="row">Dwuetapowa autoryzacja:</th>
+            <td>@Model.TwoFactorEnabled</td>
+        </tr>
+        <tr>
+            <th scope="row">Blokada:</th>
+            <td>@Model.LockoutEnabled</td>
+        </tr>
+    </tbody>
+</table>
