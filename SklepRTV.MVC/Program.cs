@@ -19,6 +19,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
+builder.Services.AddSession();
+builder.Services.AddDistributedMemoryCache();
 
 
 var app = builder.Build();
@@ -77,5 +79,7 @@ using (var scope = app.Services.CreateScope())
         await userManager.AddToRoleAsync(user,"Admin");
     }
 }
+
+app.UseSession();
 
 app.Run();

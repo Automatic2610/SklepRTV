@@ -1,0 +1,31 @@
+﻿@model SklepRTV.Model.Cart
+
+<h5>Koszyk</h5>
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nazwa</th>
+            <th>Cena</th>
+            <th>Ilość</th>
+            <th>Razem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Product.Id</td>
+                <td>@item.Product.name</td>
+                <td>@item.Product.price</td>
+                <td>@item.Quantity</td>
+                <td>@item.Product.price * @item.Quantity</td>
+                <td>
+                    <a asp-action="RemoveFromCart" asp-route-id="@item.Id">Usuń</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Do zapłaty: <b>@Model.GetTotalPrice()</b></h2>
