@@ -12,29 +12,34 @@ namespace SklepRTV.Model
 
         public void AddItem(Product product, int quantity)
         {
-            var cartItem = Items.FirstOrDefault(x => x.Id == product.Id);
-
-            if (cartItem != null) cartItem.Quantity += quantity;
+            var existingtem = Items.Find(item => item.Product.Id == product.Id);
+            if (existingtem != null)
+            {
+                existingtem.Quantity += quantity;
+            }
             else
-                Items.Add(new CartItem { Id = product.Id,Product = product,Quantity = quantity });
+            {
+                Items.Add(new CartItem
+                {
+                    Product = product,
+                    Quantity = quantity
+                });
+            }
         }
 
         public void RemoveItem(Guid productId)
         {
-            var cartItem = Items.FirstOrDefault(x => x.Id == productId); 
-            if(cartItem != null) Items.Remove(cartItem);
+            Items.RemoveAll(item => item.Product.Id == productId);
         }
 
-        public decimal GetTotalPrice()
+        public decimal CalculateTotal()
         {
-            decimal totalPrice = 0;
-
+            decimal total = 0;
             foreach (var item in Items)
             {
-                totalPrice += item.Product.price * item.Quantity;
+                total += item.Product.price * item.Quantity;
             }
-
-            return totalPrice;
+            return total;
         }
     }
 }

@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SklepRTV.Database\SklepRTV.Database.csproj" />
-    <ProjectReference Include="..\SklepRTV.Infrastructure\SklepRTV.Infrastructure.csproj" />
     <ProjectReference Include="..\SklepRTV.Model\SklepRTV.Model.csproj" />
   </ItemGroup>
 

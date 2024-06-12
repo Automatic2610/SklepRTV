@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SklepRTV.Model;
 using SklepRTV.MVC.Data;
-using SklepRTV.Infrastructure;
+using System.Text.Json;
+
 
 
 namespace SklepRTV.MVC.Controllers
@@ -16,41 +17,52 @@ namespace SklepRTV.MVC.Controllers
             _db = db;
         }
 
-        private Cart GetCart()
-        {
-            var cart = HttpContext.Session.Get<Cart>("Cart") ?? new Cart();
-            return cart;
-        }
-
-        private void SaveCart(Cart cart)
-        {
-            HttpContext.Session.Set("Cart", cart);
-        }
+       
 
         public IActionResult Index()
         {
-            var cart = GetCart();
+            var cartJson = HttpContext.Session.GetString("Cart");
+            Cart cart;
+
+            if(cartJson != null) cart = JsonSerializer.Deserialize<Cart>(cartJson);
+            else cart = new Cart();
+
             return View(cart);
         }
 
         public IActionResult AddToCart(Guid id, int quantity)
         {
             var product = _db.Products.FirstOrDefault(p => p.Id == id);
-            if (product == null)
-            {
-                var cart = GetCart();
-                cart.AddItem(product, quantity);
-                SaveCart(cart);
-            }
-            return RedirectToAction("Index");
 
+            if (product != null)
+            {
+                var cartJson = HttpContext.Session.GetString("Cart");
+                Cart cart;
+                if (cartJson != null) cart = JsonSerializer.Deserialize<Cart>(cartJson);
+                else cart = new Cart();
+
+                cart.AddItem(product, quantity);
+
+                cartJson = JsonSerializer.Serialize(cart);
+                HttpContext.Session.SetString("Cart", cartJson);
+            }
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult RemoveFromCart(Guid id)
         {
-            var cart = GetCart();
+            var cartJson = HttpContext.Session.GetString("Cart");
+            Cart cart;
+            if (cartJson != null) cart = JsonSerializer.Deserialize<Cart>(cartJson);
+            else cart = new Cart();
+
             cart.RemoveItem(id);
-            SaveCart(cart);
+
+            cartJson = JsonSerializer.Serialize(cart);
+            HttpContext.Session.SetString("Cart", cartJson);
+
+
             return RedirectToAction("Index");
         }
     }

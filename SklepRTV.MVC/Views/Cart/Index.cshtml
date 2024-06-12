@@ -1,31 +1,42 @@
 ﻿@model SklepRTV.Model.Cart
 
-<h5>Koszyk</h5>
-<table>
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nazwa</th>
-            <th>Cena</th>
-            <th>Ilość</th>
-            <th>Razem</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var item in Model.Items)
-        {
+@if(Model.Items.Count == 0)
+{
+    <h5>Twój koszyk jest pusty</h5>
+}
+else
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>@item.Product.Id</td>
-                <td>@item.Product.name</td>
-                <td>@item.Product.price</td>
-                <td>@item.Quantity</td>
-                <td>@item.Product.price * @item.Quantity</td>
-                <td>
-                    <a asp-action="RemoveFromCart" asp-route-id="@item.Id">Usuń</a>
-                </td>
+                <th>Nazwa</th>
+                <th>Cena</th>
+                <th>Ilość</th>
+                <th>Razem</th>
             </tr>
-        }
-    </tbody>
-</table>
-
-<h2>Do zapłaty: <b>@Model.GetTotalPrice()</b></h2>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Product.name</td>
+                    <td>@item.Product.price.ToString("C")</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Product.price * item.Quantity).ToString("C")</td>
+                    <td>
+                        <form asp-controller="Cart" asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="id" value="@item.Product.Id" />
+                            <button type="submit" class="btn btn-sm btn-danger">Usuń</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3"><strong>Razem do zapłaty:</strong></td>
+                <td><strong>@Model.CalculateTotal().ToString("C")</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+}
