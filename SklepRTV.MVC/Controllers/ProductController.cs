@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SklepRTV.Model;
 using SklepRTV.MVC.Data;
+using System.Diagnostics;
 
 namespace SklepRTV.MVC.Controllers
 {
@@ -54,30 +55,48 @@ namespace SklepRTV.MVC.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-		public IActionResult Create(Product product, IFormFile image)
+		public async Task<IActionResult> Create(Product product, IFormFile image)
 		{
-			if(ModelState.IsValid)
+
+			if (image == null)
 			{
-				if(image != null)
+				Debug.WriteLine("Brak pliku");
+				return Content("Brak pliku");
+			}
+			if(image.Length == 0)
+			{
+				Debug.WriteLine("Błędny plik");
+				return Content("Błędny plik");
+			}
+					
+						var path = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot", image.FileName);
+						
+
+						using(var stream = new FileStream(path,FileMode.Create))
 				{
-					var uploads = Path.Combine(_environment.WebRootPath, "uploads");
-					if(!Directory.Exists(uploads)) Directory.CreateDirectory(uploads);
-
-					var filePath = Path.Combine(uploads, image.FileName);
-					using(var fileStream = new FileStream(filePath, FileMode.Create))
-					{
-						image.CopyTo(fileStream);
-					}
-
-					product.imagePath = $"/uploads/{image.FileName}";
+					await image.CopyToAsync(stream);
 				}
 
-				_db.Products.Add(product);
-				 _db.SaveChanges();
-				return RedirectToAction("Index");
+				product.image = path;
+					
+			if(ModelState.IsValid) 
+			{
+					_db.Products.Add(product);
+					_db.SaveChanges();
+					return RedirectToAction("Index");
+			
 			}
+			else
+			{
+				var errors = ModelState.Values.SelectMany(x => x.Errors);
+				foreach(var error in errors)
+				{
+					Debug.WriteLine($"Błąd modelu: {error.ErrorMessage}");
+				}
+                ModelState.AddModelError(string.Empty, "Błąd w zapisie pliku");
+            }
 
-			return View(product);
+            return View(product);
 		}
 		[Authorize(Roles = "Admin")]
 		public IActionResult Edit(Guid id)
@@ -95,22 +114,31 @@ namespace SklepRTV.MVC.Controllers
 		{
 			if(ModelState.IsValid)
 			{
-                if (image != null)
-                {
-                    var uploads = Path.Combine(_environment.WebRootPath, "uploads");
-                    if (!Directory.Exists(uploads)) Directory.CreateDirectory(uploads);
+				try
+				{
+					if (image != null)
+					{
+						var uploads = Path.Combine(_environment.WebRootPath, "uploads");
+						if (!Directory.Exists(uploads)) Directory.CreateDirectory(uploads);
 
-                    var filePath = Path.Combine(uploads, image.FileName);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        image.CopyToAsync(fileStream);
-                    }
+						var filePath = Path.Combine(uploads, image.FileName);
+						using (var fileStream = new FileStream(filePath, FileMode.Create))
+						{
+							image.CopyToAsync(fileStream);
+						}
 
-                    product.imagePath = $"/uploads/{image.FileName}";
+						product.image = $"/uploads/{image.FileName}";
+					}
+                    _db.Products.Update(product);
+                    _db.SaveChangesAsync();
+                }
+				catch (Exception ex)
+				{
+					ModelState.AddModelError(string.Empty, "Błąd w zapisie pliku");
+                    return View(product);
                 }
 
-                _db.Products.Update(product);
-				 _db.SaveChangesAsync();
+              
 
 				return RedirectToAction("AdminIndex");
 			}

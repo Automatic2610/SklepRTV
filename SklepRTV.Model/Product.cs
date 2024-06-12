@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,6 @@ namespace SklepRTV.Model
         public int stock { get; set; }
         public virtual Warehouse[] warehouses { get; set; } = { };
         public virtual Category[] Categories { get; set; } = { };
-        public string imagePath { get; set; } = default!;
+        public string? image { get; set; } = default!;
     }
 }
