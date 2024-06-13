@@ -1,0 +1,37 @@
+﻿@model SklepRTV.Model.Order
+
+@{
+
+}
+
+<h2>Podsumowanie zamówienia</h2>
+
+<h3>Szczegóły zamówienia</h3>
+<ul>
+    <li><strong>ID zamówienia:</strong> @Model.Id</li>
+    <li><strong>Data zamówienia:</strong> @Model.OrderDate</li>
+    <li><strong>Do zapłaty:</strong> @Model.TotalAmount</li>
+</ul>
+
+<h3>Twoje produkty</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Produkt</th>
+            <th>Ilość</th>
+            <th>Cena</th>
+            <th>Razem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in MOdel.OrderItems)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price</td>
+                <td>@(item.Price * item.Quantity)</td>
+            </tr>
+        }
+    </tbody>
+</table>

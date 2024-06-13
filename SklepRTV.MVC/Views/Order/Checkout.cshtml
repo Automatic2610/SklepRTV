@@ -1,0 +1,31 @@
+﻿@model SklepRTV.Model.Order
+
+<h2>Rozliczenie</h2>
+
+<form class="form" asp-controller="Order" asp-action="PlaceOrder" method="post">
+    <div class="form-group">
+        <label for="customerName">Nazwa klienta:</label>
+        <input type="text" class="form-control" id="customerName" name="customerName" required />
+    </div>
+    <div class="form-group">
+        <label for="customerEmail">Email:</label>
+        <input type="text" class="form-control" id="customerEmail" name="customerEmail" required />
+    </div>
+    <div class="form-group">
+        <label for="@Model.CustomerAddress.city">Miasto:</label>
+        <input type="text" class="form-control" id="CustomerAddress.city" name="CustomerAddress.city" required />
+    </div>
+    <div class="form-group">
+        <label for="@Model.CustomerAddress.street">Ulica:</label>
+        <input type="text" class="form-control" id="CustomerAddress.street" name="CustomerAddress.street" required />
+    </div>
+    <div class="form-group">
+        <label for="@Model.CustomerAddress.houseNo">Numer budynku:</label>
+        <input type="text" class="form-control" id="CustomerAddress.houseNo" name="CustomerAddress.houseNo" required />
+    </div>
+    <div class="form-group">
+        <label for="@Model.CustomerAddress.flatNo">Numer mieszkania:</label>
+        <input type="text" class="form-control" id="CustomerAddress.flatNo" name="CustomerAddress.flatNo" required />
+    </div>
+    <button type="submit" class="btn btn-success">Potwierdź zamówienie</button>
+</form>
