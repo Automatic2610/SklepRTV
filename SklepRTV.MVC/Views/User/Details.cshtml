@@ -1,5 +1,9 @@
 ﻿@model Microsoft.AspNetCore.Identity.IdentityUser
 
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
 <h3>Użytkownik: @Model.UserName</h3>
 <table class="table table-bordered border-primary">
     <thead>
@@ -36,6 +40,22 @@
         <tr>
             <th scope="row">Blokada:</th>
             <td>@Model.LockoutEnabled</td>
+        </tr>
+        <tr>
+            <th scope="row">Operacje:</th>
+            <td>
+                <a asp-controller="User" asp-action="AddMemberRole" asp-route-id="@Model.Id" class="btn btn-success">Przypisz role MEMBER</a>
+                <a asp-controller="User" asp-action="AddMemberRole" asp-route-id="@Model.Id" class="btn btn-danger">Odbierz role MEMBER</a><br /><br />
+                <a asp-controller="User" asp-action="AddMemberRole" asp-route-id="@Model.Id" class="btn btn-success">Przypisz role MANAGER</a>
+                <a asp-controller="User" asp-action="AddMemberRole" asp-route-id="@Model.Id" class="btn btn-danger">Odbierz role MANAGER</a><br /><br />
+                <a asp-controller="User" asp-action="AddMemberRole" asp-route-id="@Model.Id" class="btn btn-success">Przypisz role ADMIN</a>
+                <a asp-controller="User" asp-action="AddMemberRole" asp-route-id="@Model.Id" class="btn btn-danger">Odbierz role ADMIN</a><br /><br />
+                <a asp-controller="User" asp-action="AddMemberRole" asp-route-id="@Model.Id" class="btn btn-success">Aktywuj użytkownika</a>
+                <a asp-controller="User" asp-action="AddMemberRole" asp-route-id="@Model.Id" class="btn btn-danger">Dezaktywuj użytkownika</a><br /><br />
+            </td>
+            
+                
+            
         </tr>
     </tbody>
 </table>
