@@ -1,4 +1,4 @@
-﻿@model SklepRTV.Model.Order
+﻿@model SklepRTV.Model.Cart
 
 <h2>Rozliczenie</h2>
 
@@ -12,20 +12,24 @@
         <input type="text" class="form-control" id="customerEmail" name="customerEmail" required />
     </div>
     <div class="form-group">
-        <label for="@Model.CustomerAddress.city">Miasto:</label>
+        <label for="CustomerAddress.city">Miasto:</label>
         <input type="text" class="form-control" id="CustomerAddress.city" name="CustomerAddress.city" required />
     </div>
     <div class="form-group">
-        <label for="@Model.CustomerAddress.street">Ulica:</label>
+        <label for="CustomerAddress.street">Ulica:</label>
         <input type="text" class="form-control" id="CustomerAddress.street" name="CustomerAddress.street" required />
     </div>
     <div class="form-group">
-        <label for="@Model.CustomerAddress.houseNo">Numer budynku:</label>
+        <label for="CustomerAddress.houseNo">Numer domu:</label>
         <input type="text" class="form-control" id="CustomerAddress.houseNo" name="CustomerAddress.houseNo" required />
     </div>
     <div class="form-group">
-        <label for="@Model.CustomerAddress.flatNo">Numer mieszkania:</label>
-        <input type="text" class="form-control" id="CustomerAddress.flatNo" name="CustomerAddress.flatNo" required />
+        <label for="CustomerAddress.flatNo">Numer mieszkania:</label>
+        <input type="text" class="form-control" id="CustomerAddress.flatNo" name="CustomerAddress.flatNo" />
+    </div>
+    <div class="form-group">
+        <label for="CustomerAddress.province">Województwo:</label>
+        <input type="text" class="form-control" id="CustomerAddress.province" name="CustomerAddress.province" required />
     </div>
     <button type="submit" class="btn btn-success">Potwierdź zamówienie</button>
 </form>

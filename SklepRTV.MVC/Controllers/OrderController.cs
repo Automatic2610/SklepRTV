@@ -20,14 +20,15 @@ namespace SklepRTV.MVC.Controllers
 
             if (!cart.Items.Any())
             {
-                return RedirectToAction("Index", "Cart");
+                return RedirectToAction("PlaceOrder");
             }
 
 
             return View(cart);
         }
 
-        public ActionResult PlaceOrder(string customerName, string customerEmail, AddressDetails customerAddress )
+        [HttpPost]
+        public ActionResult PlaceOrder(string customerName, string customerEmail, AddressDetails customerAddress)
         {
             var cartJson = HttpContext.Session.GetString("Cart");
             Cart cart = cartJson != null ? JsonSerializer.Deserialize<Cart>(cartJson) : new Cart();
@@ -44,7 +45,7 @@ namespace SklepRTV.MVC.Controllers
                     TotalAmount = cart.CalculateTotal()
                 };
 
-                foreach (var item in cart.Items) 
+                foreach (var item in cart.Items)
                 {
                     order.OrderItems.Add(new OrderItem
                     {
@@ -72,11 +73,17 @@ namespace SklepRTV.MVC.Controllers
         {
             var order = _db.Orders.FirstOrDefault(o => o.Id == orderId);
 
-            if (order == null) 
+            if (order == null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("OrderSubmitingEnd");
             }
 
             return View(order);
+        }
+
+        public IActionResult OrderSubmitingEnd()
+        {
+            return View();
+        }
     }
 }

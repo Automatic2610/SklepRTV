@@ -13,7 +13,6 @@ namespace SklepRTV.Model
 		public string street { get; set; } = default!;
 		public int houseNo { get; set; }
 		public int flatNo { get; set; }
-		public int countryId { get; set; }
 		public string province { get; set; } = default!;
 	}
 }
