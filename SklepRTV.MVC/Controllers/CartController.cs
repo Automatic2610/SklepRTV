@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SklepRTV.Model;
 using SklepRTV.MVC.Data;
+using System.Diagnostics;
 using System.Text.Json;
 
 
@@ -62,6 +63,7 @@ namespace SklepRTV.MVC.Controllers
             cartJson = JsonSerializer.Serialize(cart);
             HttpContext.Session.SetString("Cart", cartJson);
 
+            Debug.WriteLine($"Usunięto produkt z koszyka: {id}");
 
             return RedirectToAction("Index");
         }

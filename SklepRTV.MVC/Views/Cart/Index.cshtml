@@ -37,6 +37,7 @@ else
                 <td colspan="3"><strong>Razem do zapłaty:</strong></td>
                 <td><strong>@Model.CalculateTotal().ToString("C")</strong></td>
             </tr>
+            <a asp-controller="Cart" asp-action="Index" class="btn btn-primary">Złóż zamówienie</a>
         </tfoot>
     </table>
 }

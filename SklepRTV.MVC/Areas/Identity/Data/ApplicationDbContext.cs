@@ -20,6 +20,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Customer> Customers { get; set; }
     public DbSet<JobPosition> JobPositions { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Warehouse> Warehouses { get; set; }
     public DbSet<Worker> Workers { get; set; }
@@ -34,7 +35,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<Customer>().OwnsOne(c => c.contactDetails);
         modelBuilder.Entity<Worker>().OwnsOne(c => c.contactDetails);
 
-        
+        modelBuilder.Entity<Order>().OwnsOne(o => o.CustomerAddress);
 
        modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
     }
