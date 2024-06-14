@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SklepRTV.Model", "SklepRTV.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SklepRTV.Database", "SklepRTV.Database\SklepRTV.Database.csproj", "{432046A5-0D20-426F-89E9-C16DB77C6F23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SklepRTV.Test", "SklepRTV.Test\SklepRTV.Test.csproj", "{6ED9A9CD-1E33-419D-A317-8AE8378DD192}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{432046A5-0D20-426F-89E9-C16DB77C6F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{432046A5-0D20-426F-89E9-C16DB77C6F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{432046A5-0D20-426F-89E9-C16DB77C6F23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ED9A9CD-1E33-419D-A317-8AE8378DD192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ED9A9CD-1E33-419D-A317-8AE8378DD192}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ED9A9CD-1E33-419D-A317-8AE8378DD192}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ED9A9CD-1E33-419D-A317-8AE8378DD192}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
