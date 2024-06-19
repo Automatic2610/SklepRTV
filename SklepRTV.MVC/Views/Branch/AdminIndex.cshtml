@@ -1,0 +1,50 @@
+﻿@using SklepRTV.Model
+@model List<SklepRTV.Model.Branch>
+
+@{
+    ViewData["Title"] = "AdminIndex";
+}
+
+<h2>Lista Oddziałów</h2>
+
+<div>
+    <a asp-action="Create">Dodaj nowy oddział</a>
+</div>
+
+@if (Model.Count == 0)
+{
+    <h5>Brak oddziałów</h5>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Miasto</th>
+                <th>Ulica</th>
+                <th>Numer Domu</th>
+                <th>Numer Mieszkania</th>
+                <th>Identyfikator Kraju</th>
+                <th>Prowincja</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var branch in Model)
+            {
+                <tr>
+                    <td>@branch.City</td>
+                    <td>@branch.Street</td>
+                    <td>@branch.HouseNo</td>
+                    <td>@(branch.FlatNo ?? 0)</td>
+                    <td>@branch.Province</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@branch.Id">Edytuj</a> |
+                        <a asp-action="Details" asp-route-id="@branch.Id">Szczegóły</a> |
+                        <a asp-action="Delete" asp-route-id="@branch.Id">Usuń</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

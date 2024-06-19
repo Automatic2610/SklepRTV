@@ -1,0 +1,46 @@
+﻿@model SklepRTV.Model.Branch
+
+@{
+    ViewData["Title"] = "Dodaj Oddział";
+}
+
+<h1>Dodaj Nowy Oddział</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="City">Miasto</label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Street">Ulica</label>
+        <input asp-for="Street" class="form-control" />
+        <span asp-validation-for="Street" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="HouseNo">Numer Domu</label>
+        <input asp-for="HouseNo" class="form-control" />
+        <span asp-validation-for="HouseNo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FlatNo">Numer Mieszkania</label>
+        <input asp-for="FlatNo" class="form-control" />
+        <span asp-validation-for="FlatNo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Province">Prowincja</label>
+        <input asp-for="Province" class="form-control" />
+        <span asp-validation-for="Province" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Dodaj Oddział</button>
+</form>
+
+<div>
+    <a asp-action="Index">Powrót do listy oddziałów</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

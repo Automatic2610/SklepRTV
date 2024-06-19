@@ -1,0 +1,46 @@
+﻿@model SklepRTV.Model.Branch
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Szczegóły Oddziału</h2>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Miasto:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.City
+        </dd>
+        <dt class="col-sm-2">
+            Ulica:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Street
+        </dd>
+        <dt class="col-sm-2">
+            Numer Domu:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.HouseNo
+        </dd>
+        <dt class="col-sm-2">
+            Numer Mieszkania:
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.FlatNo ?? 0)
+        </dd>
+        <dt class="col-sm-2">
+            Prowincja:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Province
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Index">Powrót do listy oddziałów</a>
+</div>

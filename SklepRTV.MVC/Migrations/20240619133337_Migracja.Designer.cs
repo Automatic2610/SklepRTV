@@ -12,8 +12,8 @@ using SklepRTV.MVC.Data;
 namespace SklepRTV.MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240612181205_Init2")]
-    partial class Init2
+    [Migration("20240619133337_Migracja")]
+    partial class Migracja
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -335,15 +335,52 @@ namespace SklepRTV.MVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("customerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CustomerEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("total")
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("SklepRTV.Model.OrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("SklepRTV.Model.Product", b =>
@@ -352,15 +389,11 @@ namespace SklepRTV.MVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")
@@ -380,8 +413,6 @@ namespace SklepRTV.MVC.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Products");
                 });
@@ -492,9 +523,6 @@ namespace SklepRTV.MVC.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<int>("countryId")
-                                .HasColumnType("int");
-
                             b1.Property<int>("flatNo")
                                 .HasColumnType("int");
 
@@ -545,11 +573,50 @@ namespace SklepRTV.MVC.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SklepRTV.Model.Product", b =>
+            modelBuilder.Entity("SklepRTV.Model.Order", b =>
+                {
+                    b.OwnsOne("SklepRTV.Model.AddressDetails", "CustomerAddress", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("city")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int>("flatNo")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("houseNo")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("province")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("street")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.Navigation("CustomerAddress")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SklepRTV.Model.OrderItem", b =>
                 {
                     b.HasOne("SklepRTV.Model.Order", null)
-                        .WithMany("products")
-                        .HasForeignKey("OrderId");
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SklepRTV.Model.Warehouse", b =>
@@ -569,9 +636,6 @@ namespace SklepRTV.MVC.Migrations
                             b1.Property<string>("city")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
-
-                            b1.Property<int>("countryId")
-                                .HasColumnType("int");
 
                             b1.Property<int>("flatNo")
                                 .HasColumnType("int");
@@ -625,7 +689,7 @@ namespace SklepRTV.MVC.Migrations
 
             modelBuilder.Entity("SklepRTV.Model.Order", b =>
                 {
-                    b.Navigation("products");
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("SklepRTV.Model.Product", b =>

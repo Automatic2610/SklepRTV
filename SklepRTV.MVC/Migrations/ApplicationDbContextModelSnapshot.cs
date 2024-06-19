@@ -230,24 +230,21 @@ namespace SklepRTV.MVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("city")
+                    b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("countryId")
+                    b.Property<int?>("FlatNo")
                         .HasColumnType("int");
 
-                    b.Property<int>("flatNo")
+                    b.Property<int>("HouseNo")
                         .HasColumnType("int");
 
-                    b.Property<int>("houseNo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("province")
+                    b.Property<string>("Province")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("street")
+                    b.Property<string>("Street")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -520,9 +517,6 @@ namespace SklepRTV.MVC.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<int>("countryId")
-                                .HasColumnType("int");
-
                             b1.Property<int>("flatNo")
                                 .HasColumnType("int");
 
@@ -584,9 +578,6 @@ namespace SklepRTV.MVC.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<int>("countryId")
-                                .HasColumnType("int");
-
                             b1.Property<int>("flatNo")
                                 .HasColumnType("int");
 
@@ -639,9 +630,6 @@ namespace SklepRTV.MVC.Migrations
                             b1.Property<string>("city")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
-
-                            b1.Property<int>("countryId")
-                                .HasColumnType("int");
 
                             b1.Property<int>("flatNo")
                                 .HasColumnType("int");

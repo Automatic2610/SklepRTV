@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SklepRTV.MVC.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class Migracja : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -92,7 +92,6 @@ namespace SklepRTV.MVC.Migrations
                     addressDetails_street = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     addressDetails_houseNo = table.Column<int>(type: "int", nullable: false),
                     addressDetails_flatNo = table.Column<int>(type: "int", nullable: false),
-                    addressDetails_countryId = table.Column<int>(type: "int", nullable: false),
                     addressDetails_province = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -118,12 +117,37 @@ namespace SklepRTV.MVC.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    customerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerAddress_city = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerAddress_street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerAddress_houseNo = table.Column<int>(type: "int", nullable: false),
+                    CustomerAddress_flatNo = table.Column<int>(type: "int", nullable: false),
+                    CustomerAddress_province = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    unitId = table.Column<int>(type: "int", nullable: false),
+                    quantity = table.Column<int>(type: "int", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    stock = table.Column<int>(type: "int", nullable: false),
+                    image = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -138,7 +162,6 @@ namespace SklepRTV.MVC.Migrations
                     addressDetails_street = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     addressDetails_houseNo = table.Column<int>(type: "int", nullable: false),
                     addressDetails_flatNo = table.Column<int>(type: "int", nullable: false),
-                    addressDetails_countryId = table.Column<int>(type: "int", nullable: false),
                     addressDetails_province = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -253,27 +276,25 @@ namespace SklepRTV.MVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "OrderItems",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    unitId = table.Column<int>(type: "int", nullable: false),
-                    quantity = table.Column<int>(type: "int", nullable: false),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    stock = table.Column<int>(type: "int", nullable: false),
-                    imagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Orders_OrderId",
+                        name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -359,8 +380,8 @@ namespace SklepRTV.MVC.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_OrderId",
-                table: "Products",
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
@@ -403,6 +424,9 @@ namespace SklepRTV.MVC.Migrations
                 name: "JobPositions");
 
             migrationBuilder.DropTable(
+                name: "OrderItems");
+
+            migrationBuilder.DropTable(
                 name: "Warehouses");
 
             migrationBuilder.DropTable(
@@ -415,10 +439,10 @@ namespace SklepRTV.MVC.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Products");
         }
     }
 }

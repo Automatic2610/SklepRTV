@@ -1,0 +1,52 @@
+﻿@model SklepRTV.Model.Branch
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Usuń Oddział</h2>
+
+<div>
+    <h4>Czy na pewno chcesz usunąć ten oddział?</h4>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Miasto:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.City
+        </dd>
+        <dt class="col-sm-2">
+            Ulica:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Street
+        </dd>
+        <dt class="col-sm-2">
+            Numer Domu:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.HouseNo
+        </dd>
+        <dt class="col-sm-2">
+            Numer Mieszkania:
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.FlatNo ?? 0)
+        </dd>
+        <dt class="col-sm-2">
+            Identyfikator Kraju:
+        </dt>
+        <dt class="col-sm-2">
+            Prowincja:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Province
+        </dd>
+    </dl>
+
+    <form asp-controller="Branch" asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Usuń</button> |
+        <a asp-action="Index">Anuluj</a>
+    </form>
+</div>
