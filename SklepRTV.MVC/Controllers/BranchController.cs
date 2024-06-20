@@ -18,20 +18,20 @@ namespace SklepRTV.MVC.Controllers
             _db = db;
         }
 
-        // GET: /Branch/Index
+
         public async Task<IActionResult> Index()
         {
             var branches = await _db.Branches.ToListAsync();
             return View(branches);
         }
 
-        // GET: /Branch/Create
+
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: /Branch/Create
+
         [HttpPost]
         public async Task<IActionResult> Create(Branch branch)
         {
@@ -44,7 +44,7 @@ namespace SklepRTV.MVC.Controllers
             return View(branch);
         }
 
-        // GET: /Branch/Edit/{id}
+
         public async Task<IActionResult> Edit(Guid id)
         {
             var branch = await _db.Branches.FindAsync(id);
@@ -55,7 +55,7 @@ namespace SklepRTV.MVC.Controllers
             return View(branch);
         }
 
-        // POST: /Branch/Edit/{id}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Branch branch)
@@ -88,7 +88,7 @@ namespace SklepRTV.MVC.Controllers
             return View(branch);
         }
 
-        // GET: /Branch/Delete/{id}
+
         public async Task<IActionResult> Delete(Guid id)
         {
             var branch = await _db.Branches.FindAsync(id);
@@ -100,7 +100,7 @@ namespace SklepRTV.MVC.Controllers
             return View(branch);
         }
 
-        // POST: /Branch/Delete/{id}
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -116,7 +116,7 @@ namespace SklepRTV.MVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: /Branch/Details/{id}
+
         public async Task<IActionResult> Details(Guid id)
         {
             var branch = await _db.Branches.FindAsync(id);

@@ -19,7 +19,7 @@ namespace SklepRTV.MVC.Controllers
         {
             var categories = _db.Categories.ToList();
 
-
+            ViewBag.LayoutCategory = categories;
 
             return View(categories);
         }

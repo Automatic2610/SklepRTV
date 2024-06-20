@@ -29,7 +29,7 @@ namespace SklepRTV.MVC.Controllers
 			return View(products);
 		}
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
 		[HttpGet]
         public IActionResult AdminIndex()
 		{
@@ -98,7 +98,7 @@ namespace SklepRTV.MVC.Controllers
 
             return View(product);
 		}
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin,Manager")]
 		public IActionResult Edit(Guid id)
 		{
 			var product = _db.Products.FirstOrDefault(x => x.Id == id);
