@@ -2,35 +2,26 @@
 using Microsoft.AspNetCore.Mvc;
 using SklepRTV.Model;
 using SklepRTV.MVC.Data;
-
 namespace SklepRTV.MVC.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
-
-        public CategoryController(ApplicationDbContext db)
+        private readonly IApplicationDbContext _context;
+        public CategoryController(IApplicationDbContext context)
         {
-            _db = db;
+            _context = context;
         }
-
         public IActionResult Index()
         {
-            var categories = _db.Categories.ToList();
-
-            ViewBag.LayoutCategory = categories;
-
+            var categories = _context.Categories.ToList();
             return View(categories);
         }
-
         public IActionResult Details(int id)
         {
-
-            var category = _db.Categories.FirstOrDefault(p => p.Id == id);
-
+            var category = _context.Categories.FirstOrDefault(p => p.Id ==
+           id);
             if (category == null) return NotFound();
-
             return View(category);
         }
         [Authorize(Roles = "Admin")]
@@ -38,64 +29,55 @@ namespace SklepRTV.MVC.Controllers
         {
             return View();
         }
-
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create(Category category)
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(category);
-                _db.SaveChanges();
+                _context.Categories.Add(category);
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(category);
         }
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
-            var category = _db.Categories.FirstOrDefault(x => x.Id == id);
-
+            var category = _context.Categories.FirstOrDefault(x => x.Id ==
+           id);
             if (category == null) return NotFound();
-
             return View(category);
         }
-
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Edit(Category category)
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(category);
-                _db.SaveChanges();
-
+                _context.Categories.Update(category);
+                _context.SaveChanges();
                 return RedirectToAction("AdminIndex");
             }
-
             return View(category);
         }
-
         [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
-            var category = _db.Categories.FirstOrDefault(x => x.Id == id);
+            var category = _context.Categories.FirstOrDefault(x => x.Id ==
+           id);
             if (category == null) return NotFound();
-
             return View(category);
         }
-
         [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int id)
         {
-            var category = _db.Categories.FirstOrDefault(x => x.Id == id);
-
+            var category = _context.Categories.FirstOrDefault(x => x.Id ==
+           id);
             if (category == null) return NotFound();
-            _db.Categories.Remove(category);
-            _db.SaveChanges();
-
+            _context.Categories.Remove(category);
+            _context.SaveChanges();
             return RedirectToAction("AdminIndex");
         }
     }
