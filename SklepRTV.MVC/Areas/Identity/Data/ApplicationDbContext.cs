@@ -38,6 +38,16 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<Order>().OwnsOne(o => o.CustomerAddress);
 
        modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
+
+        foreach (var item in modelBuilder.Model.GetEntityTypes())
+        {
+            var p = item.FindPrimaryKey().Properties.FirstOrDefault(i => i.ValueGenerated != Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.Never);
+            if (p != null)
+            {
+                p.ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.Never;
+            }
+
+        }
     }
 }
 

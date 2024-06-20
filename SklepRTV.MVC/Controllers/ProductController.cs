@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SklepRTV.Model;
 using SklepRTV.MVC.Data;
 using System.Diagnostics;
@@ -98,53 +99,43 @@ namespace SklepRTV.MVC.Controllers
 
             return View(product);
 		}
-		[Authorize(Roles = "Admin,Manager")]
-		public IActionResult Edit(Guid id)
-		{
-			var product = _db.Products.FirstOrDefault(x => x.Id == id);
+        public IActionResult Edit(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-			if(product == null) return NotFound();
+            var productFromDb = _db.Products.Find(id);
 
-			return View(product);
-		}
+            if (productFromDb == null)
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+            }
 
-		[Authorize(Roles = "Admin")]
+            return View(productFromDb);
+        }
+        [Authorize(Roles = "Admin,Manager")]
 		[HttpPost]
-		public IActionResult Edit(Product product, IFormFile image)
+		[ValidateAntiForgeryToken]
+		public IActionResult Edit(Product product)
 		{
+
 			if(ModelState.IsValid)
 			{
-				try
-				{
-					if (image != null)
-					{
-						var uploads = Path.Combine(_environment.WebRootPath, "uploads");
-						if (!Directory.Exists(uploads)) Directory.CreateDirectory(uploads);
-
-						var filePath = Path.Combine(uploads, image.FileName);
-						using (var fileStream = new FileStream(filePath, FileMode.Create))
-						{
-							image.CopyToAsync(fileStream);
-						}
-
-						product.image = $"/uploads/{image.FileName}";
-					}
-                    _db.Products.Update(product);
-                    _db.SaveChangesAsync();
-                }
-				catch (Exception ex)
-				{
-					ModelState.AddModelError(string.Empty, "Błąd w zapisie pliku");
-                    return View(product);
-                }
-
-              
-
+				_db.Products.Update(product);
+				_db.SaveChanges();
 				return RedirectToAction("AdminIndex");
 			}
 
 			return View(product);
 		}
+
+
+
 
 		[Authorize(Roles = "Admin")]
 		public IActionResult Delete(Guid id)
