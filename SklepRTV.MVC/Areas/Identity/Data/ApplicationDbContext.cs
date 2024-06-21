@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SklepRTV.Model;
+
+
 namespace SklepRTV.MVC.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>,
-   IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext>
        options)
@@ -30,6 +32,16 @@ namespace SklepRTV.MVC.Data
             modelBuilder.Entity<Customer>().OwnsOne(c => c.contactDetails);
             modelBuilder.Entity<Worker>().OwnsOne(c => c.contactDetails);
             modelBuilder.Entity<Order>().OwnsOne(o => o.CustomerAddress);
+
+            modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
         }
+    }
+}
+
+public class ApplicationUserConfiguration : IEntityTypeConfiguration<IdentityUser>
+{
+    public void Configure(EntityTypeBuilder<IdentityUser> builder)
+        {
+
     }
 }

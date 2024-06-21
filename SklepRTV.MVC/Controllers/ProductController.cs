@@ -99,25 +99,19 @@ namespace SklepRTV.MVC.Controllers
 
             return View(product);
 		}
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var productFromDb = _db.Products.Find(id);
 
             if (productFromDb == null)
             {
-                if (id == null)
-                {
-                    return NotFound();
-                }
+                return NotFound();
             }
 
             return View(productFromDb);
         }
+
         [Authorize(Roles = "Admin,Manager")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]

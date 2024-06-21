@@ -7,19 +7,19 @@ namespace SklepRTV.MVC.Controllers
     [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
-        private readonly IApplicationDbContext _context;
-        public CategoryController(IApplicationDbContext context)
+        private readonly ApplicationDbContext _db;
+        public CategoryController(ApplicationDbContext db)
         {
-            _context = context;
+            _db = db;
         }
         public IActionResult Index()
         {
-            var categories = _context.Categories.ToList();
+            var categories = _db.Categories.ToList();
             return View(categories);
         }
         public IActionResult Details(int id)
         {
-            var category = _context.Categories.FirstOrDefault(p => p.Id ==
+            var category = _db.Categories.FirstOrDefault(p => p.Id ==
            id);
             if (category == null) return NotFound();
             return View(category);
@@ -35,8 +35,8 @@ namespace SklepRTV.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Categories.Add(category);
-                _context.SaveChanges();
+                _db.Categories.Add(category);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(category);
@@ -44,7 +44,7 @@ namespace SklepRTV.MVC.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
-            var category = _context.Categories.FirstOrDefault(x => x.Id ==
+            var category = _db.Categories.FirstOrDefault(x => x.Id ==
            id);
             if (category == null) return NotFound();
             return View(category);
@@ -55,8 +55,8 @@ namespace SklepRTV.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Categories.Update(category);
-                _context.SaveChanges();
+                _db.Categories.Update(category);
+                _db.SaveChanges();
                 return RedirectToAction("AdminIndex");
             }
             return View(category);
@@ -64,7 +64,7 @@ namespace SklepRTV.MVC.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
-            var category = _context.Categories.FirstOrDefault(x => x.Id ==
+            var category = _db.Categories.FirstOrDefault(x => x.Id ==
            id);
             if (category == null) return NotFound();
             return View(category);
@@ -73,11 +73,11 @@ namespace SklepRTV.MVC.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int id)
         {
-            var category = _context.Categories.FirstOrDefault(x => x.Id ==
+            var category = _db.Categories.FirstOrDefault(x => x.Id ==
            id);
             if (category == null) return NotFound();
-            _context.Categories.Remove(category);
-            _context.SaveChanges();
+            _db.Categories.Remove(category);
+            _db.SaveChanges();
             return RedirectToAction("AdminIndex");
         }
     }
